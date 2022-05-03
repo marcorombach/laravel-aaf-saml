@@ -10,7 +10,7 @@ class LaravelAafSAML extends Controller
 
     function authenticate($username, $password){
 
-        $auth = new \OneLogin\Saml2\Auth(config('aaf-saml-static.settings'));
+        $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
 
         $access = "";
 
@@ -24,8 +24,7 @@ class LaravelAafSAML extends Controller
 
     function metadata(){
         try {
-            return response(config('aaf-saml-static.settings'), 200);
-            $auth = new \OneLogin\Saml2\Auth(config('aaf-saml-static.settings'));
+            $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
             $settings = $auth->getSettings();
             $metadata = $settings->getSPMetadata();
             $errors = $settings->validateMetadata($metadata);
