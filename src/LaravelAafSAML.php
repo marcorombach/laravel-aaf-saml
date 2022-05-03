@@ -67,6 +67,7 @@ class LaravelAafSAML extends Controller
             $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
             $settings = $auth->getSettings();
             $metadata = $settings->getSPMetadata();
+            return response($metadata, 200)->header('Content-Type', 'text/xml');
             $errors = $settings->validateMetadata($metadata);
             if (empty($errors)) {
                 return response($metadata, '200')->header('Content-Type', 'text/xml');
