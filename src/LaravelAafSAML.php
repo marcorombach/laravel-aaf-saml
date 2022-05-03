@@ -22,7 +22,7 @@ class LaravelAafSAML
 
     function metadata(){
         try {
-            $auth = new \OneLogin\Saml2\Auth();
+            $auth = new \OneLogin\Saml2\Auth(config('aaf-saml-static.settings'));
             $settings = $auth->getSettings();
             $metadata = $settings->getSPMetadata();
             $errors = $settings->validateMetadata($metadata);
