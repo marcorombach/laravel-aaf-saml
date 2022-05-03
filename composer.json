@@ -54,7 +54,7 @@
     "extra": {
         "laravel": {
             "providers": [
-              "LaravelAafSAMLServiceProvider"
+              "Marcorombach\\LaravelAafOIDC\\LaravelAafSAMLServiceProvider"
             ],
             "aliases": {
                 "LaravelAafSAML": "Marcorombach\\LaravelAafSAML\\Facades\\LaravelAafSAML"
