@@ -3,7 +3,9 @@
 namespace Marcorombach\LaravelAafSAML;
 
 
-class LaravelAafSAML
+use Illuminate\Routing\Controller;
+
+class LaravelAafSAML extends Controller
 {
 
     function authenticate($username, $password){
