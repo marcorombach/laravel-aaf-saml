@@ -13,7 +13,7 @@ composer require marcorombach/laravel-aaf-saml
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-aaf-saml-config"
+php artisan vendor:publish --tag="aaf-saml-config"
 ```
 
 This is the contents of the published config file:
