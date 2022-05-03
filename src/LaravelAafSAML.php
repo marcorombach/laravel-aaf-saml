@@ -64,6 +64,7 @@ class LaravelAafSAML extends Controller
 
     function metadata(){
         try {
+            return response(json_encode(SAMLSettings::getSettings()), 200);
             $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
             $settings = $auth->getSettings();
             $metadata = $settings->getSPMetadata();
