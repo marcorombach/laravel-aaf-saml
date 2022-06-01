@@ -22,10 +22,17 @@ class SAMLSettings
             $metadata['sp']['singleLogoutService']['url'] = url('/saml-slo');
             $metadata['sp']['attributeConsumingService']['requestedAttributes'] = array(
                 array(
-                    "name" => "",
+                    "name" => "urn:oid:0.9.2342.19200300.100.1.3",
                     "isRequired" => false,
-                    "nameFormat" => "",
-                    "friendlyName" => "",
+                    "nameFormat" => "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
+                    "friendlyName" => "mail",
+                    "attributeValue" => array()
+                ),
+                array(
+                    "name" => "urn:oid:2.16.840.1.113730.3.1.241",
+                    "isRequired" => false,
+                    "nameFormat" => "urn:oasis:names:tc:SAML:2.0:attrname-format:uri",
+                    "friendlyName" => "displayName",
                     "attributeValue" => array()
                 )
             );
