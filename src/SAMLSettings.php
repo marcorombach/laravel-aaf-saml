@@ -16,10 +16,10 @@ class SAMLSettings
             $metadata = $parser->parseRemoteXML(config('aaf-saml.idpmetadataurl'));
 
             $metadata['sp']['entityId'] = url('/saml-sp');
-            $metadata['sp']['entityId']['assertionConsumerService']['url'] = url('/saml-acs');
-            $metadata['sp']['entityId']['attributeConsumingService']['serviceName'] = config('aaf-saml.service_name');
-            $metadata['sp']['entityId']['attributeConsumingService']['serviceDescription'] = config('aaf-saml.service_description');
-            $metadata['sp']['entityId']['singleLogoutService']['url'] = url('/saml-slo');
+            $metadata['sp']['assertionConsumerService']['url'] = url('/saml-acs');
+            $metadata['sp']['attributeConsumingService']['serviceName'] = config('aaf-saml.service_name');
+            $metadata['sp']['attributeConsumingService']['serviceDescription'] = config('aaf-saml.service_description');
+            $metadata['sp']['singleLogoutService']['url'] = url('/saml-slo');
 
 
             Cache::put('idpmetadata', $metadata, $seconds = 172800);
