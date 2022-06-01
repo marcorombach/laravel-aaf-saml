@@ -14,6 +14,14 @@ class SAMLSettings
         }else{
             $parser = new \OneLogin\Saml2\IdPMetadataParser();
             $metadata = $parser->parseRemoteXML(config('aaf-saml.idpmetadataurl'));
+
+            $metadata['sp']['entityId'] = url('/saml-sp');
+            $metadata['sp']['entityId']['assertionConsumerService']['url'] = url('/saml-acs');
+            $metadata['sp']['entityId']['attributeConsumingService']['serviceName'] = config('aaf-saml.service_name');
+            $metadata['sp']['entityId']['attributeConsumingService']['serviceDescription'] = config('aaf-saml.service_description');
+            $metadata['sp']['entityId']['singleLogoutService']['url'] = url('/saml-slo');
+
+
             Cache::put('idpmetadata', $metadata, $seconds = 172800);
             return($metadata);
         }
