@@ -9,8 +9,12 @@ class LaravelAafSAML extends Controller
 {
 
     function authenticate($username, $password){
-
-        $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
+        try{
+            $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
+            $auth->login();
+        } catch (\Exception $e) {
+            return response($e->getMessage(), '200');
+        }
 
         $access = "";
 

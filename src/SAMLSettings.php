@@ -3,10 +3,22 @@
 namespace Marcorombach\LaravelAafSAML;
 
 
+use Illuminate\Support\Facades\Cache;
+
 class SAMLSettings
 {
     static function getSettings()
     {
+        if(Cache::has('idpmetadata')){
+            return(Cache::get('idpmetadata'));
+        }else{
+            $parser = new \OneLogin\Saml2\IdPMetadataParser();
+            $metadata = $parser->parseRemoteXML(config('aaf-saml.idpmetadataurl'));
+            Cache::put('idpmetadata', $metadata, $seconds = 172800);
+            return($metadata);
+        }
+
+        /*
         return [
             // If 'strict' is True, then the PHP Toolkit will reject unsigned
             // or unencrypted messages if it expects them to be signed or encrypted.
@@ -80,7 +92,7 @@ class SAMLSettings
                  * read them and get ready for rollover.
                  */
                 // 'x509certNew' => '',
-            ),
+            /*),
 
             // Identity Provider Data that we want connected with our SP.
             'idp' => array(
@@ -142,6 +154,7 @@ class SAMLSettings
                 //          0 => '<cert2-string>',
                 //      )
                 // ),
-            )];
+/*            )];
+*/
     }
 }
