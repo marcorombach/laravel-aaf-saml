@@ -20,7 +20,15 @@ class SAMLSettings
             $metadata['sp']['attributeConsumingService']['serviceName'] = config('aaf-saml.service_name');
             $metadata['sp']['attributeConsumingService']['serviceDescription'] = config('aaf-saml.service_description');
             $metadata['sp']['singleLogoutService']['url'] = url('/saml-slo');
-
+            $metadata['sp']['attributeConsumingService']['requestedAttributes'] = array(
+                array(
+                    "name" => "",
+                    "isRequired" => false,
+                    "nameFormat" => "",
+                    "friendlyName" => "",
+                    "attributeValue" => array()
+                )
+            );
 
             Cache::put('idpmetadata', $metadata, $seconds = 172800);
             return($metadata);
