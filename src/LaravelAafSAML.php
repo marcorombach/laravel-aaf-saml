@@ -9,33 +9,32 @@ use Marcorombach\LaravelAafSAML\LoginHandler;
 
 class LaravelAafSAML extends Controller
 {
+    function initiate(){
+        $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
+        $auth->login();
+        Session::put('AuthNRequestID', $auth->getLastRequestID());
+    }
 
     function authenticate(){
         try{
             $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
-            if (Session::has('AuthNRequestID')) {
-                $requestID = Session::get('AuthNRequestID');
+            $requestID = Session::get('AuthNRequestID');
 
-                $auth->processResponse($requestID);
-                Session::forget('AuthNRequestID');
+            $auth->processResponse($requestID);
+            Session::forget('AuthNRequestID');
 
-                $userdata = [
-                    'user_name' => $auth->getNameId(),
-                    'email' => $auth->getNameId(),
-                    'given_name' => $auth->getNameId(),
-                    'family_name' => $auth->getNameId()
-                ];
+            $userdata = [
+                'user_name' => $auth->getNameId(),
+                'email' => $auth->getNameId(),
+                'given_name' => $auth->getNameId(),
+                'family_name' => $auth->getNameId()
+            ];
 
-                if ($auth->isAuthenticated()) {
-                    LoginHandler::handleLogin($userdata);
+            if ($auth->isAuthenticated()) {
+                LoginHandler::handleLogin($userdata);
 
-                    return redirect(url('/'));
-                }
-            } else {
-                $auth->login();
-                Session::put('AuthNRequestID', $auth->getLastRequestID());
+                return redirect(url('/'));
             }
-
 
         } catch (\Exception $e) {
             return response($e->getMessage(), '200');
