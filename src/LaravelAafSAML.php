@@ -23,18 +23,22 @@ class LaravelAafSAML extends Controller
             $auth->processResponse($requestID);
             Session::forget('AuthNRequestID');
 
-            $userdata = [
+            $attributes = $auth->getAttributes();
+
+            return response()->json(json_encode($attributes));
+
+            /*$userdata = [
                 'user_name' => $auth->getNameId(),
                 'email' => $auth->getNameId(),
                 'given_name' => $auth->getNameId(),
                 'family_name' => $auth->getNameId()
             ];
+            */
+            //if ($auth->isAuthenticated()) {
+            //    LoginHandler::handleLogin($userdata);
 
-            if ($auth->isAuthenticated()) {
-                LoginHandler::handleLogin($userdata);
-
-                return redirect(url('/'));
-            }
+            //    return redirect(url('/'));
+            //}
 
         } catch (\Exception $e) {
             return response($e->getMessage(), '200');
