@@ -25,6 +25,7 @@ class LaravelAafSAML extends Controller
 
             $attributes = $auth->getAttributes();
 
+            //TODO: retrieve attributes from $attributes array and map to userdata
             return response()->json(json_encode($attributes));
 
             /*$userdata = [
