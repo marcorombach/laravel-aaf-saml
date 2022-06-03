@@ -1,6 +1,6 @@
 <?php
 Route::group(['middleware' => ['web']], function () {
-    Route::post('saml-acs', [\Marcorombach\LaravelAafSAML\LaravelAafSAML::class, 'authenticate']);
+    Route::post('saml-acs', [\Marcorombach\LaravelAafSAML\LaravelAafSAML::class, 'authenticate'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
     Route::get('saml-acs', [\Marcorombach\LaravelAafSAML\LaravelAafSAML::class, 'authenticate']);
     Route::get('saml-sp', [\Marcorombach\LaravelAafSAML\LaravelAafSAML::class, 'metadata']);
     Route::post('saml-slo', [\Marcorombach\LaravelAafSAML\LaravelAafSAML::class, 'logout']);
