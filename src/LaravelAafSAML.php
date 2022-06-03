@@ -4,6 +4,7 @@ namespace Marcorombach\LaravelAafSAML;
 
 
 use Illuminate\Routing\Controller;
+use Marcorombach\LaravelAafOIDC\LoginHandler;
 
 class LaravelAafSAML extends Controller
 {
@@ -11,7 +12,35 @@ class LaravelAafSAML extends Controller
     function authenticate(){
         try{
             $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
-            $auth->login();
+            if (isset($_SESSION) && isset($_SESSION['AuthNRequestID'])) {
+                $requestID = $_SESSION['AuthNRequestID'];
+
+                $auth->processResponse($requestID);
+                unset($_SESSION['AuthNRequestID']);
+
+                $userdata = [
+                    'user_name' => $auth->getNameId(),
+                    'email' => $auth->getNameId(),
+                    'given_name' => $auth->getNameId(),
+                    'family_name' => $auth->getNameId()
+                ];
+
+                if ($auth->isAuthenticated()) {
+                    LoginHandler::handleLogin($userdata);
+
+                    if(config('aaf-oidc.post-login') != ''){
+                        return redirect()->route(config('aaf-oidc.post-login'));
+                    }
+                    return redirect(url('/'));
+                }
+            } else {
+                $auth->login();
+                $_SESSION['AuthNRequestID'] = $auth->getLastRequestID();
+            }
+
+
+
+
         } catch (\Exception $e) {
             return response($e->getMessage(), '200');
         }
