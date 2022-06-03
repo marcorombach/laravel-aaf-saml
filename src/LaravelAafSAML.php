@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller;
 class LaravelAafSAML extends Controller
 {
 
-    function authenticate($username, $password){
+    function authenticate(){
         try{
             $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
             $auth->login();
@@ -24,6 +24,10 @@ class LaravelAafSAML extends Controller
         }else{
             return false;
         }
+    }
+
+    function logout(){
+
     }
 
     function metadata(){
