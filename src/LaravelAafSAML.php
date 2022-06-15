@@ -15,7 +15,7 @@ class LaravelAafSAML extends Controller
         Session::put('AuthNRequestID', $auth->getLastRequestID());
     }
 
-    function authenticate(){
+    function authenticate($SAMLResponse){
         try{
             $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
 
