@@ -20,7 +20,7 @@ class SAMLSettings
             $metadata['sp']['attributeConsumingService']['serviceName'] = config('aaf-saml.service_name');
             $metadata['sp']['attributeConsumingService']['serviceDescription'] = config('aaf-saml.service_description');
             $metadata['sp']['singleLogoutService']['url'] = url('/saml-slo');
-            $metadata['sp']['NameIDFormat'] = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress';
+            $metadata['sp']['NameIDFormat'] = 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified';
             $metadata['sp']['attributeConsumingService']['requestedAttributes'] = array(
                 array(
                     "name" => "urn:oid:0.9.2342.19200300.100.1.3",
