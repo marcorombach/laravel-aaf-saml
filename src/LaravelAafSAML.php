@@ -33,7 +33,7 @@ class LaravelAafSAML extends Controller
             }
 
             //TODO: retrieve attributes from $attributes array and map to userdata
-            return response()->json(json_encode($attributes));
+            dd($attributes);
 
             /*$userdata = [
                 'user_name' => $auth->getNameId(),
