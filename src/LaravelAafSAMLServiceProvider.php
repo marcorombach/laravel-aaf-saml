@@ -11,7 +11,7 @@ class LaravelAafSAMLServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-aaf-saml')
-            ->hasViews()
+            ->hasViews('views')
             ->hasRoute('web')
             ->hasConfigFile();
     }
