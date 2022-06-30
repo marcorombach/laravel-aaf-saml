@@ -37,7 +37,7 @@ class SAMLSettings
                     "attributeValue" => array()
                 )
             );
-
+            dd($metadata);
             Cache::put('idpmetadata', $metadata, $seconds = 172800);
             return($metadata);
         }
