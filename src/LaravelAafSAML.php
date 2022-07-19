@@ -33,33 +33,25 @@ class LaravelAafSAML extends Controller
             }
 
             //TODO: retrieve attributes from $attributes array and map to userdata
-            dd($attributes);
+            //dd($attributes);
 
-            /*$userdata = [
-                'user_name' => $auth->getNameId(),
-                'email' => $auth->getNameId(),
-                'given_name' => $auth->getNameId(),
-                'family_name' => $auth->getNameId()
+            $userdata = [
+                'user_name' => $attributes['samaccountname'],
+                'email' => $attributes['mail'],
+                'given_name' => $attributes['userFirstName'],
+                'family_name' => $attributes['userLastName']
             ];
-            */
-            //if ($auth->isAuthenticated()) {
-            //    LoginHandler::handleLogin($userdata);
 
-            //    return redirect(url('/'));
-            //}
+            if ($auth->isAuthenticated()) {
+                LoginHandler::handleLogin($userdata);
+
+                return redirect(url('/'));
+            }
 
         } catch (\Exception $e) {
             return response($e->getMessage(), '200');
         }
 
-        $access = "";
-
-        //TODO: Return Authenticable (e.g. User-Object)
-        if($access){
-            return true;
-        }else{
-            return false;
-        }
     }
 
     function logout(){
