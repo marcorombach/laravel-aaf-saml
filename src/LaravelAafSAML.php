@@ -6,7 +6,6 @@ namespace Marcorombach\LaravelAafSAML;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Session;
 use Marcorombach\LaravelAafOIDC\UserData;
-use
 
 class LaravelAafSAML extends Controller
 {
