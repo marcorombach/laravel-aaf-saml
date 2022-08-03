@@ -1,0 +1,44 @@
+{
+    "name": "marcorombach/laravel-aaf-saml",
+    "description": "This is my package laravel-aaf-saml",
+    "keywords": [
+        "marcorombach",
+        "laravel",
+        "laravel-aaf-saml"
+    ],
+    "homepage": "https://github.com/marcorombach/laravel-aaf-saml",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marco Rombach",
+            "email": "marco@marcorombach.de",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "illuminate/contracts": "^9.0",
+        "onelogin/php-saml": "^4.0",
+        "spatie/laravel-package-tools": "^1.9.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marcorombach\\LaravelAafSAML\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+              "Marcorombach\\LaravelAafSAML\\LaravelAafSAMLServiceProvider"
+            ],
+            "aliases": {
+                "LaravelAafSAML": "Marcorombach\\LaravelAafSAML\\Facades\\LaravelAafSAML"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
