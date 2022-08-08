@@ -4,6 +4,7 @@ namespace Marcorombach\LaravelAafSAML;
 
 
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Marcorombach\LaravelAafOIDC\UserData;
 
@@ -29,6 +30,7 @@ class LaravelAafSAML extends Controller
         $errors = $auth->getErrors();
 
         if(!empty($errors)){
+            Log::error(json_encode($errors));
             if(config('aaf-saml.error-route') != '') {
                 return redirect()->route(config('aaf-saml.error-route'))->with(['error' => json_encode($errors)]);
             }
@@ -77,6 +79,7 @@ class LaravelAafSAML extends Controller
                 );
             }
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response($e->getMessage(), '500')->header('Content-Type', 'text/xml');
         }
     }
