@@ -16,51 +16,51 @@ class LaravelAafSAML extends Controller
     }
 
     function authenticate(){
-        try{
-            $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
 
-            $requestID = Session::get('AuthNRequestID');
+        $auth = new \OneLogin\Saml2\Auth(SAMLSettings::getSettings());
 
-            $auth->processResponse($requestID);
-            Session::forget('AuthNRequestID');
+        $requestID = Session::get('AuthNRequestID');
 
-            $attributes = $auth->getAttributes();
-            // NameID noch verwenden ???
-            $errors = $auth->getErrors();
+        $auth->processResponse($requestID);
+        Session::forget('AuthNRequestID');
 
-            if(!empty($errors)){
+        $attributes = $auth->getAttributes();
+        // NameID noch verwenden ???
+        $errors = $auth->getErrors();
+
+        if(!empty($errors)){
+            if(config('aaf-saml.error-route') != '') {
                 return redirect()->route(config('aaf-saml.error-route'))->with(['error' => json_encode($errors)]);
             }
-
-            $userdata = new UserData();
-            $userdata->setUsername($attributes['samaccountname'][0]);
-            $userdata->setEmail($attributes['mail'][0]);
-            $userdata->setGivenname($attributes['userFirstName'][0]);
-            $userdata->setFamilyname($attributes['userLastName'][0]);
-
-            if ($auth->isAuthenticated()) {
-                try{
-                    LoginHandler::handleLogin($userdata);
-                }catch(\ErrorException $e){
-                    return redirect()->route(config('aaf-oidc.error-route'))->with(['error' => $e]);
-                }
-                if(config('aaf-saml.post-login-route') != ''){
-                    return redirect()->route(config('aaf-saml.post-login-route'));
-                }
-                return redirect(url('/'));
-            }
-            if(config('aaf-saml.error-route') != ''){
-                return redirect()->route(config('aaf-saml.error-route'))->with(['error' => 'Authentication failed']);
-            }
-            return redirect(url('/'));
-
-        } catch (\Exception $e) {
-            return redirect()->route(config('aaf-saml.error-route'))->with(['error' => $e->getMessage()]);
+            return redirect(url('/'))->with(['error' => json_encode($errors)]);
         }
 
-    }
+        $userdata = new UserData();
+        $userdata->setUsername($attributes['samaccountname'][0]);
+        $userdata->setEmail($attributes['mail'][0]);
+        $userdata->setGivenname($attributes['userFirstName'][0]);
+        $userdata->setFamilyname($attributes['userLastName'][0]);
 
-    //function logout(){}
+        if ($auth->isAuthenticated()) {
+            try{
+                LoginHandler::handleLogin($userdata);
+            }catch(\ErrorException $e){
+                if(config('aaf-saml.error-route') != '') {
+                    return redirect()->route(config('aaf-oidc.error-route'))->with(['error' => $e]);
+                }
+                return redirect(url('/'))->with(['error' => $e]);
+            }
+            if(config('aaf-saml.post-login-route') != ''){
+                return redirect()->route(config('aaf-saml.post-login-route'));
+            }
+            return redirect(url('/'));
+        }
+        if(config('aaf-saml.error-route') != ''){
+            return redirect()->route(config('aaf-saml.error-route'))->with(['error' => 'Authentication failed']);
+        }
+        return redirect(url('/'))->with(['error' => 'Authentication failed']);
+
+    }
 
     function metadata(){
         try {
@@ -77,7 +77,7 @@ class LaravelAafSAML extends Controller
                 );
             }
         } catch (\Exception $e) {
-            return response($e->getMessage(), '200')->header('Content-Type', 'text/xml');
+            return response($e->getMessage(), '500')->header('Content-Type', 'text/xml');
         }
     }
 }
