@@ -1,6 +1,6 @@
 {
     "name": "marcorombach/laravel-aaf-saml",
-    "description": "This is my package laravel-aaf-saml",
+    "description": "SAML2 Module for Laravel and AAF IdP",
     "keywords": [
         "marcorombach",
         "laravel",
@@ -26,19 +26,11 @@
             "Marcorombach\\LaravelAafSAML\\": "src"
         }
     },
-    "config": {
-        "sort-packages": true
-    },
     "extra": {
         "laravel": {
             "providers": [
               "Marcorombach\\LaravelAafSAML\\LaravelAafSAMLServiceProvider"
-            ],
-            "aliases": {
-                "LaravelAafSAML": "Marcorombach\\LaravelAafSAML\\Facades\\LaravelAafSAML"
-            }
+            ]
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
