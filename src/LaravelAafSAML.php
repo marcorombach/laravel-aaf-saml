@@ -26,7 +26,7 @@ class LaravelAafSAML extends Controller
         Session::forget('AuthNRequestID');
 
         $attributes = $auth->getAttributes();
-        // NameID noch verwenden ???
+
         $errors = $auth->getErrors();
 
         if(!empty($errors)){
