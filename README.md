@@ -6,7 +6,6 @@ It's recommended to define a post login route and a error route.
 The error route is called with a flashed session variable (session('error')) containing information to display.
 
 To configure this package with NetIQ Advanced Authentication, a Event must be created.
--- TODO --
 
 ## Installation
 
@@ -42,6 +41,11 @@ $laravelAafSAML = new Marcorombach\LaravelAafSAML();
 $authenticatable = $laravelAafSAML->authenticate('username', 'password');
 ```
 
+It's not necessary to use the class directly. Laravel-AAF-SAML provides a route which starts the authentication process.
+
+```
+/saml-login
+```
 
 ## Credits
 
