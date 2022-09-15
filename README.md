@@ -47,6 +47,14 @@ It's not necessary to use the class directly. Laravel-AAF-SAML provides a route 
 /saml-login
 ```
 
+**Please note**: your application needs to use HTTPS, as it's a requirement of the NetIQ Advanced Authentication Framework.
+
+## Requirements
+
+- PHP 7.4 or greater
+- Laravel 8.0 or greater
+
 ## Credits
 
+- [OneLogin - SAML PHP Toolkit](https://github.com/onelogin/php-saml)
 - [Marco Rombach](https://github.com/marcorombach)
